@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Shop System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #6b4f4f;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        .menu, .order-form, .summary {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .menu h2, .order-form h2, .summary h2 {
+            color: #6b4f4f;
+        }
+        .menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .menu ul li {
+            padding: 5px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        button {
+            background-color: #6b4f4f;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #553333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Coffee Bliss</h1>
+    </header>
+
+    <div class="container">
+        <!-- Coffee Menu -->
+        <div class="menu">
+            <h2>Menu</h2>
+            <ul>
+                <li>Espresso - $3</li>
+                <li>Latte - $4</li>
+                <li>Cappuccino - $4.5</li>
+                <li>Mocha - $5</li>
+                <li>Black Coffee - $2.5</li>
+            </ul>
+        </div>
+
+        <!-- Order Form -->
+        <div class="order-form">
+            <h2>Place Your Order</h2>
+            <form id="orderForm">
+                <label for="coffeeType">Choose Coffee:</label>
+                <select id="coffeeType" name="coffeeType" required>
+                    <option value="Espresso">Espresso - $3</option>
+                    <option value="Latte">Latte - $4</option>
+                    <option value="Cappuccino">Cappuccino - $4.5</option>
+                    <option value="Mocha">Mocha - $5</option>
+                    <option value="Black Coffee">Black Coffee - $2.5</option>
+                </select>
+                <br><br>
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+                <br><br>
+                <button type="button" onclick="addToOrder()">Add to Order</button>
+            </form>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="summary">
+            <h2>Order Summary</h2>
+            <ul id="orderList">
+                <!-- Order items will be displayed here -->
+            </ul>
+            <p><strong>Total:</strong> $<span id="totalPrice">0.00</span></p>
+        </div>
+    </div>
+
+    <script>
+        const menuPrices = {
+            "Espresso": 3.00,
+            "Latte": 4.00,
+            "Cappuccino": 4.50,
+            "Mocha": 5.00,
+            "Black Coffee": 2.50
+        };
+
+        let total = 0;
+
+        function addToOrder() {
+            const coffeeType = document.getElementById('coffeeType').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+
+            if (quantity > 0) {
+                const price = menuPrices[coffeeType] * quantity;
+                total += price;
+
+                const orderList = document.getElementById('orderList');
+                const listItem = document.createElement('li');
+                listItem.textContent = `${quantity} x ${coffeeType} - $${price.toFixed(2)}`;
+                orderList.appendChild(listItem);
+
+                document.getElementById('totalPrice').textContent = total.toFixed(2);
+            } else {
+                alert("Please enter a valid quantity.");
+            }
+        }
+    </script>
+</body>
+</html>
